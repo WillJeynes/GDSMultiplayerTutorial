@@ -8,7 +8,8 @@ TODO: Explain helper methods, setup etc
 
 ## Session Runner Guide
 
-**Backend**
+### Backend
+
 The backend is a simple node.js app, with a websocket server and simple http server
 
 The websocket is open by default on ws://localhost:8080
@@ -22,7 +23,8 @@ The flow is simple
 
 This can be hosted anything that supports Node, the session runners laptop will suffice for a temporary setup.
 
-**Frontend**
+### Frontend
+
 This is a very simple 2D platformer game, to provide people with something they can expand on
 
 Currently setup to have two players, but this is an artificial limitation for simplicity not a fundamental backend one
