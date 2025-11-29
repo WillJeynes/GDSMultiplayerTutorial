@@ -3,7 +3,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 
-const wss = new WebSocketServer({ port: 8080 });
+const wss = new WebSocketServer({ port: 12001 });
 
 // The rooms
 const rooms = new Map();
@@ -122,5 +122,5 @@ const server = http.createServer((req, res) => {
   res.end(report);
 });
 
-console.log("WebSocket server running on ws://localhost:8080");
-server.listen(3000, () => console.log("Site running at http://localhost:3000"));
+console.log("WebSocket server running on ws://localhost:12001");
+server.listen(12002, () => console.log("Site running at http://localhost:12002"));
