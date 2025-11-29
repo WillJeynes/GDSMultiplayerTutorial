@@ -4286,8 +4286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1765e91c61b40e99e8309fd84be5fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Billy
+  Name: Jill
   Room: 1
+  Server: ws://stuff.willjay.rocks:7777
   Player: {fileID: 754013405}
   OtherPlayer: {fileID: 1356271957}
   PlayerText: {fileID: 1408073778}

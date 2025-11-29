@@ -15,6 +15,7 @@ public class MultiplayerManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     async Task Start()
     {
+        Debug.Log("Connecting");
         //setup
         cmm = GetComponent<MyMultiplayerManager>();
 
@@ -28,7 +29,7 @@ public class MultiplayerManager : MonoBehaviour
         }
         
         //initialise connection
-        websocket = new WebSocket("ws://localhost:8080");
+        websocket = new WebSocket(cmm.Server);
 
         websocket.OnOpen += async () =>
         {

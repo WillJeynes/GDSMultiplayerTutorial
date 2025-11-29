@@ -10,6 +10,8 @@ public class MyMultiplayerManager : MonoBehaviour
 
     public string Room;
 
+    public string Server;
+
     public GameObject Player;
 
     public GameObject OtherPlayer;
