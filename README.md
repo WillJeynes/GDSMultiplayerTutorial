@@ -10,10 +10,12 @@ There are a few content types that the message can be
 - StringContent 
 - Vector2Content 
 - FloatContent
+
 These can be send as a message, then parsed on the other side
 
 ### Sending a message
 You can make a content, then set it's values
+
 From AsyncUpdate, we can use Utils.SendMessage with the type, and the content
 ```cs
 Vector2Content content = new Vector2Content();
@@ -24,7 +26,7 @@ Utils.SendMessage("type", content);
 ```
 
 ### Receiving a message
-We can expand the existing switch statement
+We can expand the existing switch statement to handle a new type
 ```cs
 case "type":
     Vector2Content content = Utils.ConvertTo<Vector2Content>(data);
@@ -41,9 +43,9 @@ case "type":
 
 The backend is a simple node.js app, with a websocket server and simple http server
 
-The websocket is open by default on ws://localhost:8080
+The websocket is open by default on ws://localhost:7777
 
-The plaintext report is available on http://localhost:3000
+The plaintext report is available on http://localhost:7778
 
 The flow is simple
 - A client connects directly to the websocket
