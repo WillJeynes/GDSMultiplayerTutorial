@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class MyMultiplayerManager : MonoBehaviour
 {
-
     public string Name;
 
     public string Room;
@@ -22,11 +21,7 @@ public class MyMultiplayerManager : MonoBehaviour
     
     public void AsyncUpdate()
     {
-        Vector2Content content = new Vector2Content();
-        content.x = Player.transform.position.x;
-        content.y = Player.transform.position.y;
-
-        Utils.SendMessage("playerpos", content);
+        //run repeating multiplayer code here
     }
 
     public void OnMessageReceived(string title, string data)
@@ -53,11 +48,7 @@ public class MyMultiplayerManager : MonoBehaviour
 
                 break;
 
-            case "playerpos":
-                //update the players position
-                Vector2Content content = Utils.ConvertTo<Vector2Content>(data);
-                OtherPlayer.transform.position = new Vector2(content.x, content.y);
-                break;
+            //handle other message types
         }
     }
 }

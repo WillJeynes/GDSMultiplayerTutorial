@@ -3,7 +3,36 @@ Written For [Sheffield Game DevSoc](https://bit.ly/ShefDev)
 
 ## Student Guide
 
-TODO: Explain helper methods, setup etc
+For this tutorial, all code we need to edit is in Assets/MyMultiplayerManager.cs
+
+### Content Types
+There are a few content types that the message can be
+- StringContent 
+- Vector2Content 
+- FloatContent
+These can be send as a message, then parsed on the other side
+
+### Sending a message
+You can make a content, then set it's values
+From AsyncUpdate, we can use Utils.SendMessage with the type, and the content
+```cs
+Vector2Content content = new Vector2Content();
+content.x = 3.0f;
+content.y = 6.0f;
+
+Utils.SendMessage("type", content);
+```
+
+### Receiving a message
+We can expand the existing switch statement
+```cs
+case "type":
+    Vector2Content content = Utils.ConvertTo<Vector2Content>(data);
+    Debug.Log(content.x);
+    Debug.Log(content.y);
+
+```
+
 
 
 ## Session Runner Guide
