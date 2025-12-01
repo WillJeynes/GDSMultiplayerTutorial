@@ -26,6 +26,7 @@ public class MultiplayerManager : MonoBehaviour
         if (cmm.Name == "CHANGEME" || cmm.Room == "CHANGEME")
         {
             Debug.LogError("Please change the name and room!");
+            throw new Exception("END");
         }
         
         //initialise connection
@@ -69,7 +70,10 @@ public class MultiplayerManager : MonoBehaviour
     void Update()
     {
         #if !UNITY_WEBGL || UNITY_EDITOR
+        if (websocket != null)
+        {
             websocket.DispatchMessageQueue();
+        }
         #endif
     }
 
