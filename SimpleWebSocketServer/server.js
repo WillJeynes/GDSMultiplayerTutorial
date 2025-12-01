@@ -22,56 +22,55 @@ function broadcastToRoom(roomId, sender, message) {
   }
 }
 function sendLobbyInfo(roomId) {
-  broadcastToRoom(roomId, null, JSON.stringify({title: "lobby", id: "-1", content: {names: Array.from(roomNames.get(roomId)) }}))
+  broadcastToRoom(roomId, null, JSON.stringify({ title: "lobby", id: "-1", content: { names: Array.from(roomNames.get(roomId)) } }))
 }
 
 wss.on('connection', (ws) => {
   ws.userData = { name: null, roomId: null };
 
   ws.on('message', (raw) => {
-    let msg;
-
     try {
-      msg = JSON.parse(raw);
-    } catch (err) {
-      console.error("Invalid JSON:", raw);
-      return;
-    }
+      let msg = JSON.parse(raw);
 
-    const { title, content, id } = msg;
 
-    // Handle init
-    if (title === "init") {
-      const { name, roomId } = content;
+      const { title, content, id } = msg;
 
-      ws.userData = { name, roomId };
+      // Handle init
+      if (title === "init") {
+        const { name, roomId } = content;
 
-      if (!rooms.has(roomId)) {
-        rooms.set(roomId, new Set());
+        ws.userData = { name, roomId };
+
+        if (!rooms.has(roomId)) {
+          rooms.set(roomId, new Set());
+
+          //telemetry
+          roomNames.set(roomId, new Set());
+          roomCount.set(roomId, 0);
+        }
+        rooms.get(roomId).add(ws);
 
         //telemetry
-        roomNames.set(roomId, new Set());
-        roomCount.set(roomId, 0);
+        roomNames.get(roomId).add(name);
+
+        console.log(`${name} joined room ${roomId}`);
+
+        sendLobbyInfo(roomId)
+
+        return;
       }
-      rooms.get(roomId).add(ws);
-      
-      //telemetry
-      roomNames.get(roomId).add(name);
 
-      console.log(`${name} joined room ${roomId}`);
+      const { roomId } = ws.userData;
+      if (!roomId) return;
 
-      sendLobbyInfo(roomId)
-      
+
+      broadcastToRoom(roomId, ws, raw.toString());
+
+      roomCount.set(roomId, roomCount.get(roomId) + 1);
+    } catch (err) {
+      console.error("Ex:", err);
       return;
     }
-
-    const { roomId } = ws.userData;
-    if (!roomId) return;
-    
-    
-    broadcastToRoom(roomId, ws, raw.toString());
-
-    roomCount.set(roomId, roomCount.get(roomId) + 1);
   });
 
   ws.on('close', () => {
@@ -99,7 +98,7 @@ const server = http.createServer((req, res) => {
   let report = "";
 
   const sortedRooms = [...roomCount.entries()]
-    .sort((a, b) => b[1] - a[1]); 
+    .sort((a, b) => b[1] - a[1]);
 
   for (const [roomId, count] of sortedRooms) {
     const names = [...(roomNames.get(roomId) || [])].join(", ");
